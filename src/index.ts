@@ -1,6 +1,5 @@
 import express from "express";
 import * as bodyParser from "body-parser";
-import * as PostsController from "./controllers/posts";
 import { GraphQLSchema } from "graphql";
 import { importSchema } from "graphql-import";
 import { makeExecutableSchema } from "graphql-tools";
@@ -25,9 +24,6 @@ const schema = makeExecutableSchema({
 });
 const app = express();
 app.use(bodyParser.json());
-
-// ReST API
-PostsController.register(app);
 
 const pgp = pgPromise();
 const db = pgp(config);

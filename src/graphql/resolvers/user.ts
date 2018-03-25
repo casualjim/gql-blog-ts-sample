@@ -20,9 +20,9 @@ export const userResolver = {
     return db.manyOrNone("select * from posts where user_id = $1", user.id);
   },
 
-  async follower(user: users, {id}: FollowerUserArgs, {db}: Context): Promise<users> {
+  follower(user: users, {id}: FollowerUserArgs, {db}: Context): Promise<users> {
     const  subQuery = "select follower_id from followers where follower_id = $1 and followee_id = $2";
-    return await db.oneOrNone(`SELECT * from users where id in ($subQuery)`, [+id, user.id]);
+    return db.oneOrNone(`SELECT * from users where id in ($subQuery)`, [+id, user.id]);
   },
 
   followers(user: users, _: any, {db}: Context): Promise<users[]> {
