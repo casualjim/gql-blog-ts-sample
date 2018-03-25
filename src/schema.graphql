@@ -1,0 +1,140 @@
+"""
+Users own blog posts on this site.
+"""
+type User {
+  """
+  id of the user
+  """
+  id: ID
+  """
+  email address for the user for sending comment notifications
+  """
+  email: String!
+  """
+  get a post by id owned by the user
+  """
+  post(id: ID!): Post
+  """
+  get all posts owned by the user
+  """
+  posts: [Post!]!
+  """
+  get a single follower for this user
+  """
+  follower(id: ID!): User
+  """
+  get all the followers for this user
+  """
+  followers: [User!]!
+  """
+  get a single user followed by this user
+  """
+  followee(id: ID!): User
+  """
+  get all the users followed by this user
+  """
+  followees: [User!]!
+}
+
+"""
+A post in the blog
+"""
+type Post {
+  """
+  id of the post
+  """
+  id: ID
+  """
+  the owner of the post
+  """
+  user: User!
+  """
+  title of the blog post
+  """
+  title: String!
+  """
+  content of the blog post
+  """
+  body: String!
+  """
+  get a single comment on this post
+  """
+  comment(id: ID!): Comment
+  """
+  get the comments on this post
+  """
+  comments: [Comment!]!
+}
+
+"""
+A comment
+"""
+type Comment {
+  """
+  the id of the comment
+  """
+  id: ID
+  """
+  the user who made the comment
+  """
+  user: User!
+  """
+  the post this comment was made on
+  """
+  post: Post!
+  """
+  the title of the comment
+  """
+  title: String
+  """
+  the body of the comment
+  """
+  body: String!
+}
+
+"""
+query roots for the blog
+"""
+type Query {
+  user(id: ID!): User
+}
+
+"""
+Possible mutations on the graph api
+"""
+type Mutation {
+  """
+  Create a user
+  args:
+    email: unique address for the user
+  """
+  createUser(email: String!): User
+  """
+  removes a user from the database
+  """
+  removeUser(id: ID!): Boolean
+  """
+  follow a user on the site
+  """
+  follow(follower: ID!, followee: ID!): Boolean
+  """
+  unfollow a user on the site
+  """
+  unfollow(follower: ID!, followee: ID!): Boolean
+  """
+  create a post in the website
+  """
+  createPost(user: ID!, title: String!, body: String!): Post
+  """
+  remove a post in the website
+  """
+  removePost(id: ID!): Boolean
+  """
+  create a comment on a post
+  """
+  createComment(user: ID!, post: ID!, title: String!, body: String!): Comment
+  """
+  remove a comment from a post
+  """
+  removeComment(id: ID!): Boolean
+}
