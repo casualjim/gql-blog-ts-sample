@@ -50,7 +50,7 @@ export const userResolver = {
 
 export const postsResolver = {
   user(post: posts, args: any, {db}: Context): Promise<users> {
-    return db.oneOrNone("select * from users where id = $id", post.user_id);
+    return db.oneOrNone("select * from users where id = $1", post.user_id);
   },
 
   comment(post: posts, {id}: CommentPostArgs, {db}: Context): Promise<comments> {
@@ -58,7 +58,7 @@ export const postsResolver = {
   },
 
   comments(post: posts, _: any, {db}: Context): Promise<comments[]> {
-    return db.manyOrNone("select * from comments where post_id = $id", post.id);
+    return db.manyOrNone("select * from comments where post_id = $1", post.id);
   }
 };
 

@@ -138,3 +138,12 @@ type Mutation {
   """
   removeComment(id: ID!): Boolean
 }
+
+type Subscription {
+  postAdded(): Post
+  postAddedByUser(user: ID!): Post
+  postDeleted(): ID!
+  commentAdded(): Comment
+  commentAddedToPost(post: ID!): Comment
+  commentDeleted(): ID!
+}
